@@ -107,4 +107,6 @@ if __name__ == '__main__':
             print()
             printBoard(board)
     else:
+        print()
+        print("----------------------------------------------------")
         print("El tablero ingresado no es valido para un sudoku.")

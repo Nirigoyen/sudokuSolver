@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af8fb781-740a-4609-9597-faa867f0b215" name="Changes" comment="">
+    <list default="true" id="af8fb781-740a-4609-9597-faa867f0b215" name="Changes" comment="Cambio de estrategia: Ahora busco lugares vacios. Si estan vacios, comienzo a probar los numeros del 1 al 9 con BackTracking">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -74,14 +74,27 @@
       <workItem from="1696733121951" duration="12000" />
       <workItem from="1696733917682" duration="117000" />
       <workItem from="1696775571508" duration="3237000" />
-      <workItem from="1696786384268" duration="4538000" />
+      <workItem from="1696786384268" duration="5263000" />
     </task>
+    <task id="LOCAL-00001" summary="Cambio de estrategia: Ahora busco lugares vacios. Si estan vacios, comienzo a probar los numeros del 1 al 9 con BackTracking">
+      <option name="closed" value="true" />
+      <created>1696791719260</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1696791719260</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Cambio de estrategia: Ahora busco lugares vacios. Si estan vacios, comienzo a probar los numeros del 1 al 9 con BackTracking" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambio de estrategia: Ahora busco lugares vacios. Si estan vacios, comienzo a probar los numeros del 1 al 9 con BackTracking" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/sudokuSolver$main.coverage" NAME="main Coverage Results" MODIFIED="1696790987226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/sudokuSolver$main.coverage" NAME="main Coverage Results" MODIFIED="1696791632823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
