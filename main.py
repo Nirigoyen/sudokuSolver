@@ -58,7 +58,6 @@ def checkValidNumber(number, board, col, row): #Un numero sera valido si ese num
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print("hello world")
 
     numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -71,3 +70,5 @@ if __name__ == '__main__':
              [0, 0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+    print(board)
