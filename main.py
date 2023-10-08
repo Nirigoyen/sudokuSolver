@@ -1,92 +1,80 @@
-
-def getCell(row, col, board): #Averiguo en que subcelda se encuentra nuestra posicion a probar usando los limites de cada una de las subceldas
-    colNum, rowNum = 0, 0
-    limits = [0, 2, 5, 8]
-    cells = [[1, 2, 3],
-             [4, 5, 6],
-             [7, 8, 9]]
-
-    for i in range(3):
-        if not (limits[i] <= row <= limits[i + 1]):
-            rowNum += 1
-
-    for i in range(3):
-        if not (limits[i] <= col <= limits[i + 1]):
-            colNum += 1
-
-    return cells[rowNum][colNum]
-
-def checkInCell(number, cell, board):
-    cases = { #Este diccionario contiene el desplazamiento que necesita cada subcelda para poder checkear cada posicion iterando 3 veces por fila
-        1: (0, 0),
-        2: (0, 3),
-        3: (0, 6),
-        4: (3, 0),
-        5: (3, 3),
-        6: (3, 6),
-        7: (6, 0),
-        8: (6, 3),
-        9: (6, 6)
-    }
-    case = cases.get(cell)
-    cellCounter = 0
-    for i in range(3): #Iteramos 3 veces por fila comparando el numero que haya en esa posicion con el numero que estamos probando. Si llegamos a encontrar nuestro numero, retornamos true
-        for j in range(3):
-            if number == board[case[0] + i][case[1] + j]:
-                cellCounter += 1
-                
-    if cellCounter <= 2:
-        return False
-    else:
-        return True
-
-
-def checkValidNumber(number, board, col, row): #Un numero sera valido si ese numero no se encuentra ya en esa misma fila, columna o subcelda
-    # Checkeo que el numero no este en la fila en la que estamos tratando de colocar el numero
-    if board[row].count(number) >= 2:
-        inRow = True
-    else:
-        inRow = False
-
-    # Checkeo que el numero no este en la columna en la que estamos tratando de colocar el numero
-    inCol = False
-    colCounter = 0
+def findSpace(board):
     for i in range(9):
-        if number == board[i][col]:
-            colCounter += 1
-    if colCounter >= 2:
-        inCol = True
+        for j in range(9):
+            if board[i][j] == 0:
+                return i, j
+    return None, None
 
-    # Checkeo que el numero no este en la sub-celda en la que estamos tratando de colocar el numero
-    inCell = checkInCell(number, getCell(row, col, board), board)
 
-    return not inCol and not inCell and not inRow
+def checkValidNumber(number, board, col,
+                     row):  # Un numero sera valido si ese numero no se encuentra ya en esa misma fila, columna o subcelda
+    for i in range(9):
+        if board[row][i] == number or board[i][col] == number:
+            return False
+
+    initialRow, initialCol = 3 * (row // 3), 3 * (col // 3)
+    for i in range(initialRow, initialRow + 3):
+        for j in range(initialCol, initialCol + 3):
+            if board[i][j] == number:
+                return False
+    return True
+
 
 def checkValidBoard(board):
     for row in range(9):
         for col in range(9):
             if board[row][col] != 0:
-                if not checkValidNumber(board[row][col], board, col, row):
+
+                if board[row].count(board[row][col]) > 1:
                     return False
+
+                if [board[x][col] for x in range(9)].count(board[row][col]) > 1:
+                    return False
+
+                initialRow, initialCol = 3 * (row // 3), 3 * (col // 3)
+                subCell = [board[initialRow:initialRow + 3][initialCol:initialCol + 3]]
+                if subCell.count(board[row][col]) > 1:
+                    return False
+
     return True
-def autosolve(board):
-    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    for row in range(9):
-        for col in range(9):
-            if board[row][col] == 0:
-                for num in numbers:
-                    if checkValidNumber(num, board, col, row):
-                        board[row][col] = num
-                        result = autosolve(board)
-                        if result is not None:
-                            return result
-                    board[row][col] = 0
-                return None
-    return board
+
+
+def autosolve(board, show = 0):
+
+    # Buscamos algun espacio vacio en el tablero
+    row, col = findSpace(board)
+
+    # Caso base: no quedan mas espacios libres en el tablero
+    if row == None:
+        return True
+
+    # Probamos todos los numeros desde el 1 hasta el 9
+    for num in range(1, 10):
+        if checkValidNumber(num, board, col, row):
+            # Si el numero es valido, asignamos a ese espacio libre el numero
+            board[row][col] = num
+            if show == 1:
+                printBoard(board)
+
+            # Llamado recursivo para poder avanzar en la resolucion
+            if autosolve(board, show):
+                return True
+
+            # Si llegara hasta aca quiere decir que ese numero no sirvio, ponemos en 0 y procedemos con el backtracking
+            board[row][col] = 0
+
+    return False
+
 
 def printBoard(board):
-    for row in board:
-        print(row)
+    for i in range(9):
+        if i % 3 == 0 and i != 0:
+            print("----------------------")
+        for j in range(9):
+            if j % 3 == 0 and j != 0:
+                print("|", end=" ")
+            print(board[i][j], end=" ")
+        print()
 
 
 # Press the green button in the gutter to run the script.
@@ -104,10 +92,19 @@ if __name__ == '__main__':
              [0, 0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-    print(board)
+    print()
+    print("Tablero ingresado: ")
+    print()
+    printBoard(board)
 
     if checkValidBoard(board):
-        print("El tablero ingresado no es valido para un sudoku.")
+        print()
+        show = int(input("Quiere que se muestren los pasos intermedios? (1 para si, 0 para no): "))
+        if autosolve(board, show):
+            print()
+            print("----------------------------------------------------")
+            print("Resultado final: ")
+            print()
+            printBoard(board)
     else:
-        result = autosolve(board)
-        printBoard(result)
+        print("El tablero ingresado no es valido para un sudoku.")
